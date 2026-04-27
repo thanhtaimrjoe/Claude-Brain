@@ -22,6 +22,10 @@ history.jsonl
 
 # Per-project runtime data
 projects/
+workspace/
+
+# Local planning artifacts
+plans/
 
 # Plugin runtime/cache/state
 plugins/cache/
