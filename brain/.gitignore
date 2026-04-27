@@ -1,0 +1,6 @@
+.DS_Store
+*.swp
+*~
+
+# Local-only sensitive notes
+Custom Introduction.txt

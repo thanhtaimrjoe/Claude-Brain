@@ -1,0 +1,22 @@
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://localhost:20128/v1",
+    "ANTHROPIC_AUTH_TOKEN": "<REDACTED>",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "Nvidia",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "OpenAI",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "Kiro"
+  },
+  "extraKnownMarketplaces": {
+    "everything-claude-code": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/affaan-m/everything-claude-code.git"
+      }
+    }
+  },
+  "theme": "dark-ansi",
+  "hasCompletedOnboarding": true,
+  "enabledPlugins": {
+    "everything-claude-code@everything-claude-code": true
+  }
+}

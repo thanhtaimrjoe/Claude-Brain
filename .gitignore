@@ -1,0 +1,38 @@
+# macOS
+.DS_Store
+
+# Claude local/private settings
+settings.json
+settings.local.json
+.claude/settings.local.json
+
+# Claude runtime/state
+sessions/
+tasks/
+session-data/
+session-env/
+shell-snapshots/
+file-history/
+cache/
+backups/
+ide/
+metrics/
+history.jsonl
+*.log
+
+# Per-project runtime data
+projects/
+
+# Plugin runtime/cache/state
+plugins/cache/
+plugins/marketplaces/
+plugins/data/
+plugins/installed_plugins.json
+plugins/known_marketplaces.json
+
+# Keep local-only learned/generated skills out of git
+skills/
+
+# Optional local temp files
+*.tmp
+*.swp
