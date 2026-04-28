@@ -1,0 +1,1 @@
+- [Career Transition](projects/c--Users-taiht--claude/memory/user_career_transition.md) — User preparing for Fresher BrSE interviews using KINKEN & WORKLOG

@@ -21,7 +21,13 @@ history.jsonl
 *.log
 
 # Per-project runtime data
-projects/
+projects/*
+!projects/c--Users-taiht--claude/
+projects/c--Users-taiht--claude/*
+!projects/c--Users-taiht--claude/memory/
+projects/c--Users-taiht--claude/memory/*
+!projects/c--Users-taiht--claude/memory/kinken/
+!projects/c--Users-taiht--claude/memory/kinken/**
 workspace/
 
 # Local planning artifacts
