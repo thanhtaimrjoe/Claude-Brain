@@ -13,6 +13,10 @@ Current coverage:
 - function_design_summary.md — core functional design, search flows, pickup/limited mode
 - document_map_summary.md — map of the main document landscape and recommended reading order
 - doc_delivery_cloudrun_summary.md — document delivery architecture via Akamai/LB/Cloud Run from GCS (PDF/HTML)
+- system_overview.md — system purpose, UI/Search Platform APIs positioning
+- search_apis_summary.md — detailed comparison of Search Platform vs UI API
+- elasticsearch_aggs_summary.md — Elasticsearch aggregation concepts and optimization
+- sprint_tracking_summary.md — Overall progress tracking from early sprints to SPRINT 25 (PROD release) and historical case studies
 
 How to apply:
 - Start with inception_summary.md for business purpose.
