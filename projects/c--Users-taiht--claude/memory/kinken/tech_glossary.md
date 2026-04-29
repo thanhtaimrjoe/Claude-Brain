@@ -54,3 +54,22 @@ type: reference
 
 ---
 *Ghi chú: Danh sách này sẽ liên tục được cập nhật khi chúng ta đi sâu vào các Sprint tiếp theo của dự án KINKEN.*
+
+## 7. Project Management & Architecture Documentation
+- **ADR (Architecture Decision Record):** Tài liệu ghi chú lại CÁC QUYẾT ĐỊNH kiến trúc. Nó không chỉ ghi "chọn công nghệ gì" mà quan trọng nhất là ghi "TẠI SAO lại chọn" và "NHỮNG CÔNG NGHỆ NÀO đã bị loại".
+- **WIP PR (Work In Progress Pull Request) / Draft PR:** Tạo một yêu cầu gộp code ở dạng "Bản nháp". Báo cho mọi người biết là "Tui đang code dở chức năng này, mọi người có thể vào xem hướng đi của tui trước, nhưng đừng merge (gộp) vội nhé".
+- **Monorepo vs Polyrepo:** 
+  - *Monorepo:* Bỏ tất cả (code FE, BE, tài liệu) vào chung một kho chứa (Repository) khổng lồ.
+  - *Polyrepo (Multi-repo):* Tách riêng mỗi phần ra một kho chứa khác nhau (Repo FE riêng, Repo BE riêng, Repo Docs riêng).
+
+## 8. Elasticsearch In-Depth (Sâu hơn về Tìm kiếm)
+- **Index (Chỉ mục):** Trong Elasticsearch, "Index" có hai nghĩa:
+  1. *Danh từ:* Giống như một "Bảng" (Table) trong cơ sở dữ liệu truyền thống. Ví dụ: Index `products` chứa thông tin sản phẩm, Index `documents` chứa tài liệu.
+  2. *Động từ (Indexing):* Hành động nạp dữ liệu vào Elasticsearch và phân tích nó để sau này tìm kiếm cực nhanh. Giống như việc bạn tạo "Mục lục" ở cuối cuốn sách để lật trang cho lẹ.
+- **Mapping (Sơ đồ cấu trúc):** Giống như khai báo kiểu dữ liệu (Schema) cho Index. Báo cho ES biết trường `title` là dạng chữ, trường `price` là dạng số, trường `vector` là dạng tọa độ AI.
+- **Query DSL (Domain Specific Language):** Ngôn ngữ truy vấn của Elasticsearch, được viết hoàn toàn bằng định dạng JSON. Bạn không dùng SQL (như `SELECT * FROM...`) mà gửi một cục JSON báo cho ES biết bạn muốn tìm gì, lọc (filter) thế nào, và ưu tiên (boost) kết quả nào.
+## 9. Domain Knowledge (Nghiệp vụ Nhôm Kính - KINKEN)
+- **Mikomi (見込み):** Kích thước chiều sâu của khung cửa (từ trong nhà ra ngoài trời). Đây là một thuật ngữ chuyên ngành quan trọng để xác định linh kiện thay thế.
+- **Mitsuke (見付け):** Kích thước chiều rộng của mặt cắt khung cửa (phần nhìn thấy khi đứng trực diện). Kết hợp với Mikomi để tạo nên thông số profile nhôm.
+- **Product Code Master (Danh mục mã sản phẩm gốc):** Bảng dữ liệu cốt lõi chứa toàn bộ các mã sản phẩm từng được sản xuất. Trong dự án KINKEN, con số này lên tới 8.800.000 (8.8 triệu) records, đặt ra thách thức cực lớn về xử lý dữ liệu và tìm kiếm.
+

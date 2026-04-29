@@ -66,7 +66,7 @@ Dưới đây là danh sách các Output Summary Report qua các mốc thời gi
 
 *(Phần này sẽ được cập nhật dần khi chúng ta review lại từng giai đoạn của dự án. Ghi chú các quyết định thiết kế quan trọng, thay đổi kiến trúc, hay các lỗi kỹ thuật lớn đã xử lý trong mỗi Sprint.)*
 
-### Early Sprints (SPRINT 1 & 2 - Foundation & Infrastructure Planning)
+### Giai đoạn sơ khai (Tháng 5-6/2025 - Foundation & Infrastructure Planning)
 - **Thống nhất Tài liệu & Quy trình (Documentation Strategy):**
     - **Vấn đề:** Tránh việc duy trì song song tài liệu thiết kế (Excel) và code (DDL, Backend Code) gây lãng phí effort (double maintenance).
     - **Giải quyết:** 
@@ -87,7 +87,7 @@ Dưới đây là danh sách các Output Summary Report qua các mốc thời gi
     - **Tư duy IaC:** Khuyến khích sử dụng Terraform để quản lý hạ tầng.
     - **Tracking:** Đồng bộ task giữa các công cụ (Pivotal Tracker, Monday) bằng cách map ID để dễ dàng tra cứu.
 
-### SPRINT 3 (Architecture Deep-Dive & Methodologies)
+### Giai đoạn Tháng 8/2025 (Tương ứng SPRINT 2 & 3)
 - **Lên kế hoạch các Phương pháp luận (Methodologies Planning):**
     - **Batch Processing:** Đánh giá cách triển khai Batch (Job vs Notebook) tập trung vào khả năng "re-execution" (Retry) dễ dàng. Lên danh sách thiết kế lịch trình (Schedule), Trigger, Retry policy và Logging cho toàn bộ Batch.
     - **Search (Elasticsearch):** Cân nhắc chiến lược cập nhật Index: **Delta Update** (chỉ cập nhật phần chênh lệch) hay **Full Reindex** (xóa và tạo lại toàn bộ).
@@ -99,7 +99,7 @@ Dưới đây là danh sách các Output Summary Report qua các mốc thời gi
     - Lên danh sách Core Functions và Sitemap.
     - Thu thập tài liệu về System Interface từ End-client để share cho Offshore.
 
-### SPRINT 4 (Advanced Architecture & PoC Planning)
+### Giai đoạn Tháng 8/2025 (Tương ứng SPRINT 4)
 - **Tối ưu hóa Chi phí & Hạ tầng (Cost & Infra Optimization):**
     - **Estimate 2.0:** Hoàn thành bản dự toán chi phí hạ tầng lần 2. Khách hàng yêu cầu tách biệt **Initial Cost** (chi phí ban đầu) và **Monthly Cost** (chi phí hàng tháng).
     - **Multimodal AI:** Bổ sung dự toán chi phí cho việc triển khai **Multimodal** (xử lý đa phương thức: hình ảnh, văn bản...).
@@ -119,7 +119,7 @@ Dưới đây là danh sách các Output Summary Report qua các mốc thời gi
     - Thiết kế ES Schema, Analyzer, và đặc biệt là **Relevance Scoring & Boosting** (đây là "linh hồn" của Search Engine - quyết định kết quả nào hiện lên đầu).
     - Xây dựng danh sách chức năng chính (VN version) để team offshore nắm bắt.
 
-### SPRINT 5 (PoC Execution & Translation Phase)
+### Giai đoạn Tháng 8/2025 (Tương ứng SPRINT 5)
 - **Chuẩn hóa Tài liệu & Ngôn ngữ (Standardization & Translation):**
     - Các tài liệu thiết kế quan trọng như **Model Selection** (E5 vs OpenAI) và **Exception Handling Policy** đã hoàn thành bản draft.
     - **BrSE Task:** Đội offshore (MOR) cần dịch toàn bộ tài liệu sang tiếng Nhật (hạn chót 19/06) để GW review. Đây là công việc điển hình của BrSE để đảm bảo sự thấu hiểu giữa hai bên.
@@ -136,7 +136,7 @@ Dưới đây là danh sách các Output Summary Report qua các mốc thời gi
     - Đội offshore chủ động hỏi về tiến độ của **Danh sách chức năng (Feature List)** và **Interface giữa các hệ thống**.
     - GW phản hồi: Feature List đã ổn định khoảng 80% (đến cột D trong Excel), khuyến khích MOR đặt câu hỏi (QA) hoặc họp Zoom ngay cả khi tài liệu chưa hoàn thiện 100% để tránh nghẽn cổ chai.
 
-### SPRINT 6 (PoC Benchmarking & Domain Knowledge)
+### Giai đoạn Tháng 8/2025 (Tương ứng SPRINT 6)
 - **Đánh giá PoC & Giải quyết "Bóng ma" Dữ liệu (PoC Benchmark & Data Consistency):**
     - **Sự cố Benchmark:** Kết quả search của PoC hiện tại (tháng 5/2025) khác với kết quả của bản PoC cũ (tháng 12/2024) dù dùng chung một bộ data đã extract.
     - **Troubleshooting (Quá trình phân tích nguyên nhân):**
@@ -156,7 +156,7 @@ Dưới đây là danh sách các Output Summary Report qua các mốc thời gi
     - Ưu tiên làm tài liệu so sánh 3 giải pháp ETL (Databricks / Data Fusion / Dataflow) bao gồm cả Cost.
     - Tạm gác các task PoC để tập trung vào: *Review Wireframe*, *Phân quyền (Authorization)*, và *Nghiên cứu cơ chế Xác thực đa hệ thống (Azure, EEA, MyLX)*.
 
-### SPRINT 7 (Feature Prototyping & Deep Troubleshooting)
+### Giai đoạn Tháng 9/2025 (Tương ứng SPRINT 7)
 - **Thiết kế Xác thực & Phân quyền (AuthN/AuthZ Refinement):**
     - Đã cập nhật tài liệu Auth dựa trên specs từ Confluence của khách hàng (Lixil).
     - **Process:** GW đã trao đổi với Client, note lại các kết quả xác nhận (màu xanh dương) và các vấn đề còn tồn đọng/bài tập về nhà (màu xanh lá) để chuẩn bị cho buổi họp tiếp theo với các bên liên quan.
@@ -177,7 +177,7 @@ Dưới đây là danh sách các Output Summary Report qua các mốc thời gi
     - Chuẩn bị tài liệu Interface liên kết với các hệ thống khác.
     - Nghiên cứu cơ chế Keyword Suggestion (Gợi ý từ khóa).
 
-### SPRINT 8 (API Architecture, Security & ANN Troubleshooting)
+### Giai đoạn 2025/06/06 (Pre-development Phase)
 - **Kiến trúc API (REST vs GraphQL/gRPC):**
     - **Vấn đề:** Chọn kiến trúc nào cho Backend (Python) của dự án KINKEN.
     - **Quyết định:** Chọn **REST API**.
@@ -204,7 +204,7 @@ Dưới đây là danh sách các Output Summary Report qua các mốc thời gi
     - Phải làm rõ Data Source: Các màn hình "Danh sách tài liệu sản phẩm", "Chi tiết sản phẩm" sẽ lấy data từ RDB (Database quan hệ - PostgreSQL/MySQL) thay vì Elasticsearch.
 
 
-### SPRINT 9 (Test Strategy, Push Integration & Suggestion Features)
+### Giai đoạn 2025/06/13 (Pre-development Phase)
 - **Kiến trúc Tích hợp (Integration Architecture):**
     - **Quyết định:** Sử dụng APIGee và mô hình tích hợp dữ liệu dạng **Push (đẩy)** thay vì Pull (kéo).
     - **Lý do (Case Study):** Trong mô hình Pull, KINKEN sẽ phải chủ động đi "hỏi" các hệ thống khác xem có dữ liệu mới không (tốn tài nguyên, dễ bị độ trễ). Với mô hình Push kết hợp APIGee (như một trạm trung chuyển), các hệ thống khác khi có dữ liệu mới sẽ chủ động "đẩy" sang KINKEN. Điều này giúp dữ liệu real-time hơn và giảm tải cho hệ thống KINKEN.
@@ -218,7 +218,7 @@ Dưới đây là danh sách các Output Summary Report qua các mốc thời gi
     - Đã có chỉ thị bắt đầu chuẩn bị môi trường, tài liệu và các điều kiện cần thiết để chính thức bước vào Phase Coding (Thiết kế chi tiết & Code).
 
 
-### SPRINT 10 (Test Strategy Definition)
+### Giai đoạn 2025/06/13 (Detail Test Strategy)
 - **Chiến lược Kiểm thử Toàn diện (Test Strategy):**
     - GW và MOR thống nhất tài liệu Chiến lược Test cho toàn bộ hệ thống, bao gồm 4 thành phần chính: Frontend (NextJS), Backend (FastAPI), Search Engine (Elasticsearch), và ETL Pipeline (Databricks).
 - **Các Cấp độ Kiểm thử (Test Levels):**
@@ -240,7 +240,7 @@ Dưới đây là danh sách các Output Summary Report qua các mốc thời gi
     - **Batch Update (Cập nhật định kỳ):** Phải test xem việc chạy ETL hàng ngày/tuần có làm sót dữ liệu mới hoặc làm sập tính năng đang chạy hay không. Giải pháp: Có script tự động query Elasticsearch ngay sau mỗi lần ETL chạy xong để nghiệm thu.
 
 
-### SPRINT 11 (Cost Optimization, Data Migration & Search Constraints)
+### Giai đoạn 2025/06/20 (Cost & Migration Planning)
 - **Chiến lược cập nhật Index (Delta Update vs Wash/Full Refresh):**
     - **Vấn đề:** Khi có dữ liệu mới, nên xóa hết làm lại (Wash/Full Refresh) hay chỉ cập nhật phần thay đổi (Delta Update)?
     - **Quyết định:** Chọn **Cập nhật chênh lệch (差分更新 - Delta Update)**.
@@ -256,7 +256,7 @@ Dưới đây là danh sách các Output Summary Report qua các mốc thời gi
     - **Chiến thuật Test:** Cần xin LIXIL một bộ dữ liệu "bản sao" của Production (càng sớm càng tốt, ví dụ data của cuối tháng 7) để chạy Load Test và kiểm tra chất lượng OCR cho các file phi cấu trúc (Unstructured data).
 
 
-### SPRINT 12 (Logging Strategy & Elasticsearch Internals)
+### Giai đoạn 2025/06/27 (Logging & Risk Management)
 - **Chiến lược Logging (Ghi log):**
     - **Frontend (NextJS):** Quyết định tạm thời KHÔNG thu thập log ở phía client (trình duyệt của user) để giảm thiểu độ phức tạp. Nếu sau này thấy cần thiết sẽ cân nhắc tích hợp Sentry.
     - **Elasticsearch (ES):** Yêu cầu offshore điều tra thêm về việc ghi log cho các câu Query (Request) và Response trả về từ ES. Quan trọng nhất: Việc thay đổi cấu hình log này có gây ra "Downtime" (thời gian chết của hệ thống) hay không?
@@ -269,6 +269,86 @@ Dưới đây là danh sách các Output Summary Report qua các mốc thời gi
 - **Chuẩn bị cho Code & Thiết kế chi tiết:**
     - Yêu cầu khách hàng cung cấp bản Design (UI/UX) mới nhất (bản ngày 26/06) để team offshore đối chiếu với Sitemap và Specs.
     - Lên lịch họp trực tiếp (Offshore Camp tại Việt Nam) vào tuần sau để thảo luận sâu về kiến trúc luồng dữ liệu (Data Collection Architecture).
+
+
+### Giai đoạn 2025/07/11 (ADR & Project Structure)
+- **Kiến trúc & Cấu trúc thư mục (Project Structure):**
+    - Team bắt đầu định nghĩa cấu trúc thư mục (Structure Description) cho cả Backend (BE) và Frontend (FE). MOR đang rà soát lại cấu trúc BE và tiến hành dịch tài liệu cấu trúc FE sang tiếng Nhật để GW duyệt.
+- **Áp dụng ADR (Architecture Decision Record - Hồ sơ Quyết định Kiến trúc):**
+    - **Vấn đề:** Khi dự án kéo dài, các developer sau này thường thắc mắc "Tại sao ngày xưa lại chọn công nghệ này?", "Tại sao không dùng cái kia?".
+    - **Giải pháp:** Triển khai viết **ADR** để lưu lại mọi quyết định quan trọng.
+    - **Phạm vi (Scope) của ADR:**
+        - Lựa chọn tài nguyên hạ tầng (Cloud, Database).
+        - Kiến trúc ứng dụng (Clean Architecture, Microservices...).
+        - Lựa chọn ngôn ngữ, Framework.
+        - Lựa chọn Thư viện (Libraries).
+    - **Luồng phê duyệt (Status Flow):**
+        - *Proposed (Đề xuất):* Do đội Dev (MOR) tạo ra.
+        - *Accepted (Chấp thuận):* Do phía GW (Tech Lead/Khách hàng) review và chốt.
+        - *Deprecated (Lỗi thời/Loại bỏ):* Khi một quyết định cũ không còn phù hợp, GW hoặc MOR có thể đánh dấu là Deprecated.
+    - **Chiến lược lưu trữ ADR (Monorepo vs Polyrepo):**
+        - Thay vì tạo một Repo (kho lưu trữ code) riêng chỉ để chứa tài liệu ADR, GW quyết định **lưu ADR chung trong cùng Repo của code** (ví dụ: ADR của Frontend nằm trong Repo Frontend). Lý do: Để khi Dev thay đổi code thì có thể sửa luôn tài liệu ADR trong cùng một Pull Request (PR), tránh tình trạng code một nơi, tài liệu cập nhật một nẻo.
+- **Quy trình làm việc với PR (WIP PR Workflow):**
+    - GW yêu cầu MOR sử dụng tính năng **WIP (Work In Progress) Pull Request**. Khi mới bắt đầu làm, cứ tạo một cái PR nháp (WIP) để Tech Lead có thể vào xem trước (Pre-review) hướng đi, tránh việc code xong hết rồi mới review lại từ đầu dẫn đến phải đập đi làm lại.
+
+
+### Giai đoạn 2025/07/18 (Resource Allocation)
+- **Thống nhất Cấu trúc hệ thống (System Architecture Structure):**
+    - Đã có tài liệu mô tả cấu trúc Backend (BE). Điểm quan trọng: Cấu trúc của Data Collection / ETL (Databricks/Cloud Run) sẽ sử dụng chung ngôn ngữ (Python) và Framework (FastAPI) với Backend. Do đó, team quyết định đợi cấu trúc BE chốt xong 100% rồi mới áp dụng tương tự cho ETL để đảm bảo tính đồng nhất (Consistency).
+- **Tinh chỉnh AI & Tìm kiếm (Elasticsearch Tuning):**
+    - GW gửi yêu cầu xác nhận về các điểm có thể "Tùy biến" (Customize/Tuning) trong Elasticsearch. Cụ thể là sự kết hợp giữa **Morphological Analysis** (Phân tích hình thái học - tìm kiếm theo Keyword) và **Vector Search** (Tìm kiếm theo ngữ nghĩa). Offshore (MOR) phải trả lời trong ngày.
+- **Lập kế hoạch & Phân công nguồn lực (Sprint Planning & Resource Allocation):**
+    - GW yêu cầu cung cấp lịch trình chi tiết có gán ngày tháng cho tháng 7-8 để đưa lên Monday.com quản lý tiến độ.
+    - **Phân công công việc thực tế cho team Offshore:**
+        - **Truong (Tech Lead):** Thống nhất phương án Collection/ETL với team BE. Thiết kế chi tiết cho các cụm công nghệ lõi: Embedding (Nhúng Vector), OCR (Trích xuất chữ), Indexing (Tạo chỉ mục) và Query (Truy vấn).
+        - **Nhat/Ryan (Frontend Lead):** Dựa vào bản thiết kế **Figma** để bóc tách các "Component" (Thành phần UI). Phân loại rõ ràng Component nào là *Common (Dùng chung)*, Component nào là *Individual (Dùng riêng)*. Chuẩn bị tạo **Initial Commit** (Đẩy khung code đầu tiên lên Git).
+        - **Hoai & Hoan/Orange (Backend/ETL Dev):** Bắt đầu code các API đơn giản và xây dựng mã nguồn nền tảng (Base source) cho phần Data Collection.
+        - **Tuna (QA/Tester):** Bắt đầu lập danh sách các "Quan điểm kiểm thử" (Test perspectives/Test cases) cho cả Frontend và Backend (đặc biệt chú trọng phần Collection).
+
+
+### Giai đoạn 2025/07/25 (Tương ứng SPRINT 1 - Initial Commit)
+- **Initial Commit & Setup Môi trường (Docker Requirement):**
+    - Team Frontend (FE) và Backend (BE) đã thực hiện "Initial Commit" (tạo khung source code ban đầu).
+    - **Yêu cầu quan trọng từ GW:** Cả FE và BE đều phải cấu hình lại tài liệu hướng dẫn chạy code trên máy local sao cho **Bắt buộc sử dụng Docker**. Điều này để đảm bảo tính nhất quán môi trường giữa tất cả các thành viên trong dự án, tránh câu nói "Code chạy tốt trên máy em".
+    - Cấu trúc thư mục của Data Collection và ETL cũng đang được dịch sang tiếng Nhật để chốt trước khi tạo Initial Commit cho 2 kho lưu trữ (repos) này.
+- **Áp dụng ADR (Architecture Decision Record) vào thực tế:**
+    - PR số 1 cho ADR của Frontend đã được merge thành công.
+    - Các PR cho ADR của Backend, ETL và Collection đang ở trạng thái WIP (Work In Progress) để chờ review.
+- **Biến động Thiết kế (Design Fluidity & Risk Management):**
+    - **Vấn đề:** Trong buổi họp Steering Committee (Ban chỉ đạo dự án) nội bộ của LIXIL, đã có phản hồi (Feedback) yêu cầu thay đổi về Layout màn hình. Điều này có nghĩa là thiết kế Figma chưa thể FIX 100%.
+    - **Hành động của BrSE/Tech Lead:** 
+        - Không thể nói với team Dev là "Ngồi chờ bao giờ thiết kế chốt thì mới code" (vì sẽ trễ tiến độ).
+        - Quyết định: Cứ tiếp tục code dựa trên bản thiết kế hiện tại (tập trung vào các Common Components và Logic ngầm). Khi có thiết kế mới sẽ cập nhật sau. Đây là sự thích ứng (Agile/Flexibility) cần thiết trong phát triển phần mềm.
+- **Kế hoạch Tuần tới (Sprint Planning):**
+    - **FE:** Liệt kê danh sách Component, bắt tay code các "Common Component" (thành phần dùng chung).
+    - **BE (Orange, Hoai, Truong):** Bắt đầu Thiết kế Database (DB Design), viết DDL (Data Definition Language - script tạo bảng), và Thiết kế Index cho Elasticsearch.
+    - **QA (Tuna):** Tổng hợp kịch bản test và kiểm chứng dữ liệu.
+
+
+### Giai đoạn 2025/08/01 (Tương ứng SPRINT 2)
+- **Tiến độ Thực thi (Development Progress):**
+    - **Base Source (Khung source code):** Đã xây dựng xong khung code cơ bản cho phần Thu thập dữ liệu (Collection) và Xử lý dữ liệu (ETL).
+    - **Frontend:** Đã liệt kê xong danh sách các Component (UI). Mục tiêu trong ngày là hoàn thành việc phát triển các "Common Component" (thành phần dùng chung).
+    - **Backend & Database:** Thiết kế DB đã hoàn tất. File DDL (tạo bảng) đang trong trạng thái chờ review.
+    - **QA:** Đã hoàn thành việc tổng hợp kịch bản test và đang trong quá trình xác minh dữ liệu mẫu.
+    - **Thiết kế API:** Cấu trúc giao tiếp giữa FE và BE (API List) đã được thiết kế xong.
+- **Vấn đề Vận hành & Công cụ (Tool & Operations Issues):**
+    - **Sự cố phân quyền trên Monday.com:** Một số thành viên team Dev (Nhat, Hoai, Hoang, Tu) không thể xem được task trong mục Sprint do chưa được mời (invite) vào không gian làm việc tương ứng. -> Khách hàng đã khắc phục ngay lập tức.
+    - **Rào cản Ngôn ngữ:** Team Offshore (VN) gặp khó khăn vì các cột trên Monday đều bằng tiếng Nhật. Khách hàng đã linh hoạt bổ sung tiếng Anh (vd: Requirements, Common) để hỗ trợ team VN.
+- **Làm rõ Nghiệp vụ chuyên ngành (Domain Knowledge Clarification):**
+    - **Vấn đề "Từ lóng":** Trong luồng "Xác định sản phẩm", team gặp phải các từ chuyên ngành nhôm kính/xây dựng (như 見込み - Mikomi, 見付け - Mitsuke) chưa có trong Từ điển (Ubiquitous Language).
+    - **Giải pháp:** Khi thiết kế Database cho luồng này, team BE sẽ quyết định tên tiếng Anh (English naming) cho các từ này. Nếu có từ quá khó hiểu, team sẽ list ra và trao đổi trực tiếp với khách hàng.
+- **Yêu cầu Phi chức năng (Non-Functional Requirements - NFR):**
+    - **Quy mô Dữ liệu khổng lồ:** Khách hàng (LIXIL) xác nhận "Product Code Master" (Danh sách mã sản phẩm gốc) lên tới **8.800.000 records**.
+    - **Rủi ro:** Con số này ảnh hưởng trực tiếp đến chi phí Hạ tầng (Infra) và Hiệu suất tìm kiếm (Search Performance).
+    - **Kế hoạch:** Bắt buộc phải có kịch bản kiểm chứng (Verify/PoC) hiệu năng sớm nhất có thể.
+- **Quyết định về Định danh Dự án (Project Naming & Branding):**
+    - Tên tiếng Nhật chính thức: **金属商品情報検索システム** (Hệ thống Tìm kiếm Thông tin Sản phẩm Kim loại).
+    - Xóa bỏ hoàn toàn chữ "SAGAS" (tên hệ thống cũ) khỏi source code.
+    - Tên vật lý (Physical Name) dùng cho code, repo, hạ tầng: **`kinken`**.
+- **Kế hoạch Sprint 3 (Planning):**
+    - **ETL:** Thực hiện Data Mapping (Map dữ liệu từ nguồn sang đích).
+    - **Elasticsearch:** Thiết kế Index để chuẩn bị gánh khối lượng 8.8 triệu data.
 
 
 ### Mid Sprints (Core Development & Integration)
