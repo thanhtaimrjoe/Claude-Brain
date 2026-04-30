@@ -1,4 +1,0 @@
-- [Yano profile](user/yano_profile.md) — IT Comtor/Tester/QA/BrSE in HCMC; focused on JLPT N1 and BrSE growth.
-- [Collab style](feedback/yano_collab_style.md) — Calm, direct, low-pressure help; small steps and no filler.
-- [Current work context](project/current_work_context.md) — KINKEN and WORKLOG/WPC with preferred analysis formats.
-- [Reference](reference/.gitkeep) — External systems and lookup pointers.
