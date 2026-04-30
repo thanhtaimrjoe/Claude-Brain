@@ -80,6 +80,16 @@ User searches: "アルミ 窓 修理"
 → User can refine search
 ```
 
+## Advanced Search Precision Strategy
+
+### Search Keywords Length Control (Planned/Evaluation)
+**Rationale**: For very short keywords (<= 3 characters), semantic/vector search accuracy tends to be poor because there is not enough context for the model to find high-precision matches.
+
+**Proposed Strategy**:
+- **Keyword-only mode**: If input keyword is <= 3 characters, disable Vector search and perform only Keyword search (Morpheme analysis).
+- **Fallback Mechanism**: Perform Keyword search first; if results = 0, then trigger Vector search to ensure users don't get an empty result page.
+- **Prefix match control**: Establish a minimum character limit before triggering prefix matching (e.g. for codes like "ACL-100A") to prevent noise in search results.
+
 ## Interpretation
 
 These modes improve UX when users search for documents using terms that are actually product names or partially product-oriented queries. The system intelligently detects product context and guides users to relevant documents.

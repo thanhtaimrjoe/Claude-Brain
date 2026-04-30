@@ -7,6 +7,11 @@ type: project
 # KINKEN Data Flow
 
 ## High-Level Pipeline
+### GCS Bucket Transfer Architecture
+Files flow between buckets before being processed by Databricks:
+- **Service**: Google Cloud Storage Transfer Service.
+- **Flow**: Collection Bucket (Raw) -> ETL Bucket (Ready for Databricks).
+- **Transformation**: Path mapping is ideally handled by the source (PIM). If source cannot change path structure, a **Cloud Function** will be used as a custom transfer agent to remap directory structures.
 
 ```
 PIM → CSV Export → Cloud Storage (GCS) → Databricks ETL → PostgreSQL → Elasticsearch → API → UI

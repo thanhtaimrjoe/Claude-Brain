@@ -179,6 +179,20 @@ Lên kế hoạch chi tiết cho PoC Environment bao gồm:
 - Đội offshore chủ động hỏi về tiến độ của **Danh sách chức năng (Feature List)** và **Interface giữa các hệ thống**.
 - GW phản hồi: Feature List đã ổn định khoảng 80% (đến cột D trong Excel), khuyến khích MOR đặt câu hỏi (QA) hoặc họp Zoom ngay cả khi tài liệu chưa hoàn thiện 100% để tránh nghẽn cổ chai.
 
+### Giai đoạn Cuối Tháng 02/2026 (Tương ứng SPRINT 20 - Post-Holiday Rush & UAT Prep)
+
+#### 1. Áp lực Tiến độ ETL và Ưu tiên Dữ liệu (ETL Rush)
+**Vấn đề**: Sau kỳ nghỉ, việc import data v1.4 trên Dev vẫn kẹt. Dù đã xong bước Embedding cho Question và Web Catalog, nhưng luồng ETL phía sau (Gold layer) bị lỗi nên data không hiển thị được.
+**Quyết định**: Chuyển hướng ưu tiên xử lý dữ liệu. Bị khách hàng LIXIL hối thúc, team quyết định dồn lực chạy xong full data cho **Question** trước (chốt 23/02), sau đó mới làm Web Catalog. Đối với môi trường Staging, ưu tiên import các tài liệu có cấu trúc nhẹ (như CAD, Parts, Product update) trước, để những tài liệu nặng (Web Catalog, Question) chạy sau.
+
+#### 2. Mâu thuẫn Resource Management (Sửa Bug vs Làm Tính năng mới)
+**Vấn đề**: Dựa trên Daily Report, toàn bộ team offshore (MOR) đang dồn lực sửa lỗi (Bugs) do đội QC report, dẫn đến các Yêu cầu bổ sung (Additional Requests) từ khách hàng bị đình trệ.
+**Giải quyết**: Khách hàng (GW) yêu cầu MOR phải quy hoạch lại nhân sự (Resource Allocation). Bắt buộc phải cắt cử ít nhất 1 Dev FE và 1 Dev BE tập trung hoàn thành các UI Improve (như giữ nguyên Tab, click Product nhảy sang Catalog) để demo kịp trong buổi họp định kỳ ngày 26/02.
+
+#### 3. Chuẩn bị Hạ tầng (Load Test & Security Scan)
+**Rủi ro phát hiện**: Cấu hình Load Balancer (đặc biệt là Routing rule) giữa các môi trường Dev, Staging, và Prod đang không đồng nhất.
+**Hành động**: Bắt buộc phải đồng bộ hóa gấp trước khi bước vào Load Test (Kiểm thử tải) và trước đợt Vulnerability Scan (Kiểm tra lỗ hổng bảo mật) của LIXIL.
+
 ### Giai đoạn Tháng 02/2026 (Tương ứng SPRINT 18 & 19 - Preparation for Staging & Prod)
 
 #### 1. Xử lý URL Tài liệu và Mapping (Document URL & Mapping)
@@ -197,6 +211,13 @@ Lên kế hoạch chi tiết cho PoC Environment bao gồm:
 
 #### 4. Import v1.4 & Performance Test Prep
 - **Tiến độ**: Môi trường Dev đang bị chậm tiến độ Import v1.4 do nút thắt cổ chai (bottleneck) ở khâu OCR của Web Catalog (hơn 700.000 files). Các phần khác (FAQ, QA) vẫn đang tiến hành Indexing/Embedding bình thường.
+
+#### 5. Cơ chế File Transfer và Sự cố Infinite Retry (Storage Transfer)
+**Vấn đề 1 (Log CAD chạy liên tục)**: Hệ thống ghi nhận log transfer lỗi của CAD xuất hiện liên tục không dừng.
+**Giải quyết**: Nguyên nhân do GCP Storage Transfer Service lưu message queue. Trước đây, khi file ở collection bucket bị xóa, message queue vẫn còn. Storage Transfer đọc queue -> cố gắng transfer file đã xóa -> Thất bại -> Cho vào queue chạy lại (Infinite loop). Dev đã phải xóa thủ công các message queue tồn đọng này để dừng vòng lặp.
+
+**Vấn đề 2 (Custom Path Transfer)**: Cần copy file từ Collection Bucket sang ETL Bucket nhưng phải đổi tên đường dẫn (VD: `/description/structure` -> `/description-product/structure`).
+**Quyết định (Kiến trúc)**: Dùng Storage Transfer Service mặc định (chỉ copy 1-1). Cloud Function hiện tại chỉ dùng để ghi log. Việc custom path trước mắt sẽ nhờ team PIM (bên cấp data) xuất file đúng path yêu cầu. Chỉ khi PIM không làm được, team MOR mới can thiệp viết code Cloud Function để custom path transfer. Đây là tư duy "Đẩy trách nhiệm xử lý data về phía nguồn".
 
 #### 5. Bàn giao Vận hành ETL (Operation Handover)
 **Vấn đề**: Team offshore (MOR) sắp vắng mặt, team GW (khách hàng/tester) cần tự chạy được luồng nạp dữ liệu (ETL Job) để không làm gián đoạn quá trình test và chuẩn bị cho Staging Import (UAT vào tháng 3).
