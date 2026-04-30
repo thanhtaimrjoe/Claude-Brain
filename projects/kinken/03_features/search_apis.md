@@ -17,6 +17,7 @@ type: project
 | Auth | `api_key` header |
 | Purpose | Richer and more flexible search queries for indexed documents |
 | Use case | Internal systems, advanced filtering, complex queries |
+| Path Prefix | `/ext` (External/Common Search Platform prefix, e.g., `/ext/v1/search`) |
 
 **Example Request**:
 ```json
@@ -56,6 +57,13 @@ GET /api/v1/documents?page=1&q=アルミサッシ&limit=20&document_type=descrip
 | Pagination | Page-based | Page-based + cursor support |
 | Response | Simplified document list | Full document metadata |
 | Target audience | Frontend developers | Backend integrators |
+
+## API Pathing Strategy
+
+| Type | Path Pattern | Reason |
+|------|--------------|--------|
+| Frontend API | `/api/v1/xxxxx` | Synchronized with UI deployment |
+| Common Platform API | `/ext/v1/xxxxx` | Decoupled versioning; prefix ensures `/ext` precedes version number |
 
 ## Why Both APIs Exist?
 

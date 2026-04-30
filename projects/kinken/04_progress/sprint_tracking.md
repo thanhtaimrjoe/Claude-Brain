@@ -179,6 +179,34 @@ Lên kế hoạch chi tiết cho PoC Environment bao gồm:
 - Đội offshore chủ động hỏi về tiến độ của **Danh sách chức năng (Feature List)** và **Interface giữa các hệ thống**.
 - GW phản hồi: Feature List đã ổn định khoảng 80% (đến cột D trong Excel), khuyến khích MOR đặt câu hỏi (QA) hoặc họp Zoom ngay cả khi tài liệu chưa hoàn thiện 100% để tránh nghẽn cổ chai.
 
+### Giai đoạn Tháng 02/2026 (Tương ứng SPRINT 18 & 19 - Preparation for Staging & Prod)
+
+#### 1. Xử lý URL Tài liệu và Mapping (Document URL & Mapping)
+**Vấn đề**: Việc sử dụng `docCode` trên URL tài liệu gây cản trở quy trình chỉnh sửa file (edit) trực tiếp trên GCS của LIXIL. Bên cạnh đó, rule mapping URL tài liệu thay đổi dẫn đến dữ liệu bản vẽ (zumen) bị lỗi.
+**Giải quyết**: 
+- Loại bỏ hoàn toàn `docCode` khỏi URL tài liệu.
+- Bắt buộc phải import lại (re-ingest) toàn bộ dữ liệu bản vẽ (zumen) theo spec mapping mới.
+
+#### 2. Chiến lược Test và Pipeline ETL (ETL Job Consolidation)
+**Vấn đề**: Quá trình Test cần một luồng chạy hoàn chỉnh (end-to-end), nhưng hiện tại JOB lấy dữ liệu và JOB xử lý AI (OCR/Chunking/Embedding) đang bị tách rời.
+**Giải quyết**: Gom toàn bộ quá trình từ Bronze -> OCR -> Chunking -> Embedding -> Insert ES/RDB vào một luồng JOB duy nhất. Môi trường Staging được clear data sạch sẽ để chạy thử nghiệm kịch bản này.
+**Lesson learned (Rủi ro Data tracking)**: Cơ chế tracking của ETL hiện tại kiểm tra file mới dựa trên `etl_tracking` table. Nếu file bị update bằng cách *ghi đè cùng tên*, ETL sẽ bỏ qua. Điểm này đã được note lại và confirm với khách hàng (LIXIL) để họ chú ý khi thao tác file.
+
+#### 3. Zero-downtime Indexing Flow (Elasticsearch)
+**Quy trình tự động hóa**: Khi tạo index mới (ví dụ v1.3.4 từ v1.3.3) -> Reindex data cũ sang -> Insert data mới vào v1.3.4 -> Switch Alias sang v1.3.4 -> Đóng/Xóa index cũ. Quy định chỉ giữ lại tối đa 2 version cũ để tiết kiệm dung lượng.
+
+#### 4. Import v1.4 & Performance Test Prep
+- **Tiến độ**: Môi trường Dev đang bị chậm tiến độ Import v1.4 do nút thắt cổ chai (bottleneck) ở khâu OCR của Web Catalog (hơn 700.000 files). Các phần khác (FAQ, QA) vẫn đang tiến hành Indexing/Embedding bình thường.
+
+#### 5. Bàn giao Vận hành ETL (Operation Handover)
+**Vấn đề**: Team offshore (MOR) sắp vắng mặt, team GW (khách hàng/tester) cần tự chạy được luồng nạp dữ liệu (ETL Job) để không làm gián đoạn quá trình test và chuẩn bị cho Staging Import (UAT vào tháng 3).
+**Giải quyết**: 
+- Bàn giao quyền chạy End-to-End JOB trên Databricks cho GW (Tester chỉ cần thả file vào ETL Bucket và bấm Run Job).
+- Lập bảng Mapping chi tiết: Loại Dữ liệu (Product, Zumen, CAD...) tương ứng với Tên JOB nào.
+- **Ngoại lệ**: Đối với Staging, tạm thời tách luồng Web Catalog ra khỏi End-to-End JOB vì khối lượng OCR quá khủng khiếp, không khả thi để chạy một mạch.
+**Lesson learned**: Khi xử lý Unstructured Data quy mô lớn, luôn phải tách riêng luồng Heavy Processing (như OCR/AI) ra khỏi các luồng xử lý Structured Data (như Product/Zumen) để tránh một task nặng làm nghẽn toàn bộ hệ thống.
+**Kế hoạch**: Import toàn bộ khối lượng dữ liệu khổng lồ của Web-catalog, FAQ, và Question vào để chuẩn bị cho đợt **Performance Test** giữa tháng 2.
+
 ### Giai đoạn Tháng 8/2025 (Tương ứng SPRINT 6)
 
 #### Đánh giá PoC & Giải quyết "Bóng ma" Dữ liệu (PoC Benchmark & Data Consistency)
@@ -208,6 +236,20 @@ Lên kế hoạch chi tiết cho PoC Environment bao gồm:
 - Tạm gác các task PoC để tập trung vào: *Review Wireframe*, *Phân quyền (Authorization)*, và *Nghiên cứu cơ chế Xác thực đa hệ thống (Azure, EEA, MyLX)*.
 
 ### Giai đoạn Tháng 9/2025 (Tương ứng SPRINT 7)
+
+#### Develop Kick-off Camp (08-11/09/2025)
+
+**Vấn đề**: Thống nhất nghiệp vụ tìm kiếm, kiến trúc xử lý dữ liệu và thiết kế API với LIXIL (GW).
+
+**Giải quyết**: 
+- Chốt luồng tìm kiếm Web Catalog là **tìm theo trang (Page-based)** thay vì theo cuốn Catalog.
+- Kiến trúc Dữ liệu: Áp dụng cơ chế **Chunking** dữ liệu text (chia nhỏ) để tạo nhiều vector/Morpheme array cho 1 record khi Index vào Elasticsearch.
+- API Design: Thống nhất thêm tiền tố `/ext` cho API tích hợp bên ngoài (Common Search API) để độc lập phiên bản với Frontend.
+
+**Kết quả**: Giải quyết các điểm nghẽn về hướng thiết kế, rõ ràng phạm vi công việc cho giai đoạn Dev.
+
+**Lesson learned**: Gặp mặt trực tiếp (Kick-off Camp) giúp ra quyết định nhanh hơn hẳn so với họp online định kỳ, đặc biệt trong việc chốt các kiến trúc lõi.
+
 
 #### Thiết kế Xác thực & Phân quyền (AuthN/AuthZ Refinement)
 

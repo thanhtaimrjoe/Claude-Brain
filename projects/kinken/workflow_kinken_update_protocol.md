@@ -10,7 +10,7 @@ Khi user làm việc với dự án KINKEN, Claude phải mặc định bám the
 
 **Why**: User muốn quy trình ổn định, không cần nhắc lại cách làm mỗi phiên chat; mục tiêu là ghi chép xuyên suốt để phục vụ retrospective và case study BrSE.
 
-**How to apply**: Mỗi khi user gửi Output Summary Report mới (hoặc yêu cầu tiếp tục KINKEN), thực hiện đúng tuần tự các bước dưới đây.
+**How to apply**: Mỗi khi user yêu cầu tiếp tục KINKEN, thực hiện đúng tuần tự các bước dưới đây.
 
 ---
 
@@ -18,7 +18,7 @@ Khi user làm việc với dự án KINKEN, Claude phải mặc định bám the
 
 ### 1. Source of Truth & Priority
 
-Ưu tiên đọc file người dùng chỉ định (thường ở `workspace/Output Summary Report.md`).
+Ưu tiên đọc file người dùng chỉ định (thường ở `workspace/Spec.md`).
 
 Sau đó đối chiếu với:
 - `04_progress/sprint_tracking.md`

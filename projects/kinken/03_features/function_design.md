@@ -48,7 +48,9 @@ originSessionId: b37d84e1-f8b9-48d3-b090-b3afc2a6deca
 
 **Behavior**:
 - Matching products are highlighted above search results
+- Only keywords separated by spaces that have 2 or more characters are used for mode evaluation (e.g., "サーモス△H" only uses "サーモス")
 - Clicking a product moves user into product-filtered document list
+- The product document list tab is fixed to "Description/Manual" (取説)
 
 **Example**:
 ```
@@ -63,8 +65,10 @@ User searches: "アルミサッシ 窓"
 **Trigger**: When full AND matching does not find a product, but exactly one keyword finds product candidates.
 
 **Behavior**:
-- System enters limited mode
-- User can narrow document search around that product
+- Matching products are highlighted above search results
+- Only keywords separated by spaces that have 2 or more characters are used for mode evaluation (e.g., "サーモス△H" only uses "サーモス")
+- Clicking a product moves user into product-filtered document list
+- The product document list tab is fixed to "Description/Manual" (取説)
 - One-character keywords are ignored for mode detection
 
 **Example**:

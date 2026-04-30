@@ -17,6 +17,7 @@ type: reference
 - **Zero-downtime:** Khả năng nâng cấp hoặc bảo trì hệ thống mà không làm gián đoạn trải nghiệm của người dùng (hệ thống không bị sập).
 
 ## 2. Backend & API
+- **Signed URL (URL kèm chữ ký):** Một URL có chứa các tham số bảo mật (chữ ký số) giúp giới hạn thời gian truy cập và đối tượng truy cập. Chỉ những user có "vé" hợp lệ mới xem được tài liệu thông qua URL này, giúp bảo mật các tài liệu nội bộ trên GCS.
 - **FastAPI:** Một framework của ngôn ngữ Python dùng để xây dựng API cực kỳ nhanh và hiện đại.
 - **REST API:** Chuẩn thiết kế API phổ biến nhất. Dùng các HTTP Method (GET, POST, PUT, DELETE) để tương tác với tài nguyên (Resources). Tận dụng tốt HTTP Cache.
 - **GraphQL:** Một chuẩn API cho phép Frontend "tùy chỉnh" dữ liệu muốn lấy, tránh bị dư thừa dữ liệu (Over-fetching) nhưng dễ gây gánh nặng cho Database.
@@ -43,6 +44,8 @@ type: reference
 - **Delta Update (Cập nhật chênh lệch):** Chỉ cập nhật những dữ liệu bị thay đổi. Khác với *Full Refresh / Wash* là xóa hết làm lại từ đầu.
 
 ## 6. AI & Elasticsearch (Search Engine)
+- **Morphological Search (形態素検索 - Keitaiso Kensaku):** Tìm kiếm bằng cách phân tích hình thái từ vựng (cắt từ), ví dụ dùng Kuromoji tokenizer. Đối lập với Vector/Semantic Search.
+- **Chunking (チャンク化):** Việc cắt nhỏ một đoạn văn bản dài thành các đoạn ngắn hơn để phù hợp với giới hạn của Embedding Model (vì mỗi model chỉ nhận tối đa 1 số lượng token nhất định).
 - **Elasticsearch (ES):** Bộ máy tìm kiếm khổng lồ, chuyên dùng để tìm kiếm văn bản tốc độ cao.
 - **Index:** Giống như một "Bảng" (Table) trong Database truyền thống, nhưng được thiết kế đặc biệt để tối ưu cho việc tìm kiếm.
 - **Re-index:** Quá trình đọc lại toàn bộ dữ liệu từ nguồn và tạo lại Index mới (thường mất nhiều thời gian).
@@ -69,6 +72,10 @@ type: reference
 - **Mapping (Sơ đồ cấu trúc):** Giống như khai báo kiểu dữ liệu (Schema) cho Index. Báo cho ES biết trường `title` là dạng chữ, trường `price` là dạng số, trường `vector` là dạng tọa độ AI.
 - **Query DSL (Domain Specific Language):** Ngôn ngữ truy vấn của Elasticsearch, được viết hoàn toàn bằng định dạng JSON. Bạn không dùng SQL (như `SELECT * FROM...`) mà gửi một cục JSON báo cho ES biết bạn muốn tìm gì, lọc (filter) thế nào, và ưu tiên (boost) kết quả nào.
 ## 9. Domain Knowledge (Nghiệp vụ Nhôm Kính - KINKEN)
+- **Page-based Search (ページ単位検索):** Phương thức tìm kiếm mà kết quả trả về từng TRANG cụ thể của một cuốn catalog (áp dụng cho danh sách tài liệu chung).
+- **Catalog-based Search (カタログ単位検索):** Phương thức tìm kiếm trả về cả CUỐN catalog (áp dụng cho danh sách tài liệu chuyên biệt của 1 sản phẩm).
+- **Product Pickup Mode (商品ピックアップモード):** Chế độ hiển thị riêng biệt: khi keyword search khớp với tên một sản phẩm, sản phẩm đó sẽ được "đưa lên top" (highlight) phía trên danh sách tài liệu.
+- **Product Limited Mode (商品限定モード):** Chế độ giới hạn: khi có nhiều keyword, nhưng chỉ có MỘT keyword khớp với sản phẩm, hệ thống sẽ tự động giới hạn phạm vi tìm kiếm tài liệu xung quanh sản phẩm đó.
 - **Mikomi (見込み):** Kích thước chiều sâu của khung cửa (từ trong nhà ra ngoài trời). Đây là một thuật ngữ chuyên ngành quan trọng để xác định linh kiện thay thế.
 - **Mitsuke (見付け):** Kích thước chiều rộng của mặt cắt khung cửa (phần nhìn thấy khi đứng trực diện). Kết hợp với Mikomi để tạo nên thông số profile nhôm.
 - **Product Code Master (Danh mục mã sản phẩm gốc):** Bảng dữ liệu cốt lõi chứa toàn bộ các mã sản phẩm từng được sản xuất. Trong dự án KINKEN, con số này lên tới 8.800.000 (8.8 triệu) records, đặt ra thách thức cực lớn về xử lý dữ liệu và tìm kiếm.
