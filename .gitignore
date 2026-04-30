@@ -22,6 +22,12 @@ history.jsonl
 
 # Per-project runtime data
 projects/*
+
+# Allow portable docs under projects/
+!projects/kinken/
+!projects/kinken/**
+
+# Keep memory path exceptions (legacy)
 !projects/c--Users-taiht--claude/
 projects/c--Users-taiht--claude/*
 !projects/c--Users-taiht--claude/memory/
@@ -40,8 +46,8 @@ plugins/data/
 plugins/installed_plugins.json
 plugins/known_marketplaces.json
 
-# Keep local-only learned/generated skills out of git
-skills/
+# Skills (portable)
+# (do not ignore)
 
 # Optional local temp files
 *.tmp
