@@ -43,17 +43,31 @@ type: reference
 - **Cloud Dataflow / Cloud Data Fusion:** Các công cụ ETL native của nền tảng Google Cloud.
 - **Delta Update (Cập nhật chênh lệch):** Chỉ cập nhật những dữ liệu bị thay đổi. Khác với *Full Refresh / Wash* là xóa hết làm lại từ đầu.
 
+- **Surrogate Key (Khóa đại diện):** Một giá trị ID tự động tăng (1, 2, 3...) được hệ thống cấp phát làm khóa chính, không mang ý nghĩa nghiệp vụ. Giúp tối ưu hiệu năng database và tránh rủi ro khi mã nghiệp vụ (Natural Key) thay đổi.
+- **Natural Key (Khóa tự nhiên):** Mã định danh có ý nghĩa thực tế (ví dụ: `product_code`, `catalog_id`). Dùng để liên kết dữ liệu ở tầng Bronze trước khi mapping sang Surrogate Key.
+- **Lookup Mapping:** Quá trình tra cứu dữ liệu (ví dụ: từ mã `ABC` tìm ra ID `123`) trong bước Transformation của ETL để thiết lập mối quan hệ giữa các bảng dữ liệu.
+
+- **Structured Data (Dữ liệu có cấu trúc):** Dữ liệu được tổ chức theo format cố định (vd: bảng trong Database với các cột rõ ràng như Tên, ID, Giá). Rất dễ để query và phân tích. Thường được import cực nhanh.
+- **Unstructured Data (Dữ liệu phi cấu trúc):** Dữ liệu không có format định sẵn (vd: nội dung chữ bên trong trang file PDF, hình ảnh). Trong KINKEN, loại dữ liệu này rất "nặng", cần qua xử lý AI (OCR/Embedding) mới có thể đổ vào Elasticsearch.
+- **Diff Data (Dữ liệu chênh lệch/差分データ):** Phần dữ liệu mới phát sinh hoặc bị thay đổi kể từ lần đồng bộ cuối cùng. Di chuyển Diff Data (Diff Migration) giúp tiết kiệm cực nhiều thời gian so với Full Migration.
+
 ## 6. AI & Elasticsearch (Search Engine)
 - **Morphological Search (形態素検索 - Keitaiso Kensaku):** Tìm kiếm bằng cách phân tích hình thái từ vựng (cắt từ), ví dụ dùng Kuromoji tokenizer. Đối lập với Vector/Semantic Search.
 - **Chunking (チャンク化):** Việc cắt nhỏ một đoạn văn bản dài thành các đoạn ngắn hơn để phù hợp với giới hạn của Embedding Model (vì mỗi model chỉ nhận tối đa 1 số lượng token nhất định).
 - **Elasticsearch (ES):** Bộ máy tìm kiếm khổng lồ, chuyên dùng để tìm kiếm văn bản tốc độ cao.
 - **Index:** Giống như một "Bảng" (Table) trong Database truyền thống, nhưng được thiết kế đặc biệt để tối ưu cho việc tìm kiếm.
-- **Re-index:** Quá trình đọc lại toàn bộ dữ liệu từ nguồn và tạo lại Index mới (thường mất nhiều thời gian).
+- **Re-index:** Quá trình đọc lại toàn bộ dữ liệu từ nguồn và tạo lại Index mới (thường mất nhiều thời gian). Trong Elasticsearch, có thể dùng `_reindex` API để copy data nội bộ giữa các index, giúp chạy lại bộ Tokenizer với từ điển mới mà không cần nạp lại từ DB nguồn.
 - **Alias (Bí danh):** "Bảng hiệu" trỏ vào một Index. Giúp thực hiện Zero-downtime Re-index (đổi bảng hiệu từ quán cũ sang quán mới trong 1 giây).
+- **User Dictionary (形態素辞書 - Keitaiso Jisho):** Từ điển người dùng cung cấp cho Elasticsearch (như Kuromoji) để định nghĩa cách cắt từ đúng theo ý muốn (ví dụ: tên riêng sản phẩm của LIXIL).
 - **Segment Bloat:** Hiện tượng ES bị phình to ổ cứng do cơ chế "chỉ đánh dấu xóa chứ không xóa thật". Cần dùng lệnh dọn rác (Force Merge).
 - **Vector Search / Embedding:** Dùng AI (như OpenAI, E5-base) biến văn bản thành các dãy số (Vector) để máy tính hiểu được "ngữ nghĩa" thay vì chỉ so khớp từ khóa.
 - **ANN (Approximate Nearest Neighbor):** Thuật toán tìm kiếm xấp xỉ trong Vector Search. Giúp tìm cực nhanh nhưng phải đánh đổi một chút độ chính xác (Recall).
-- **RRF (Reciprocal Rank Fusion):** Thuật toán "lai" (Hybrid Search) kết hợp điểm số của Keyword Search truyền thống và Vector Search để ra kết quả tốt nhất.
+- **RRF (Reciprocal Rank Fusion):** Thuật toán "lai" (Hybrid Search) kết hợp điểm số của Keyword Search truyền thống và Vector Search để ra kết quả tốt nhất mà không cần chuẩn hóa điểm số (score normalization).
+- **Score Normalization:** Quá trình quy đổi các loại điểm số khác nhau (ví dụ điểm Vector và điểm Keyword) về cùng một thang đo (thường là 0-1) để có thể cộng/nhân với nhau.
+- **Score Boosting:** Việc tăng trọng số cho một trường dữ liệu (field) cụ thể trong Elasticsearch. Ví dụ: Từ khóa xuất hiện ở `title` sẽ được nhân x3 điểm (`title^3`) so với xuất hiện ở `content`.
+- **Re-ranking (Sắp xếp lại):** Kỹ thuật lấy một danh sách kết quả thô từ Search Engine, sau đó dùng thuật toán riêng (thường ở Backend) để tính toán lại điểm và thay đổi thứ tự hiển thị trước khi trả về cho UI.
+- **Learning to Rank (LTR):** Sử dụng Machine Learning để "dạy" cho hệ thống cách sắp xếp kết quả tìm kiếm dựa trên dữ liệu lịch sử click/tương tác của người dùng.
+- **Degraded Operation (縮退運転 - Shukutai unten):** Chế độ "suy giảm hoạt động". Khi một dịch vụ bên thứ 3 (như OpenAI) hoặc một tính năng bị lỗi, hệ thống tự động tắt tính năng đó và duy trì các chức năng cơ bản khác thay vì sập toàn bộ (ví dụ: tắt Vector Search, chỉ chạy Full-text Search).
 
 ---
 *Ghi chú: Danh sách này sẽ liên tục được cập nhật khi chúng ta đi sâu vào các Sprint tiếp theo của dự án KINKEN.*

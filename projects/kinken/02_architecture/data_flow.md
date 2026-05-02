@@ -53,6 +53,8 @@ PIM → CSV Export → Cloud Storage (GCS) → Databricks ETL → PostgreSQL →
 | Delta Update vs Full Reindex | Prefer delta for efficiency; full reindex only when schema changes |
 | Embedding generation | Done during ETL, not real-time, to reduce API latency. Text is chunked so 1 DB record = Multiple vectors in Index |
 | Index alias strategy | Enables zero-downtime reindexing |
+| AI Outage Fallback | If OpenAI is down, stop all processing from Embedding step onwards (do not ingest partial data). Rerun the process once the service recovers. |
+| Cross-Environment Mapping | Use Natural Keys (String codes) in Bronze. Transform to Surrogate Keys (System IDs) in Silver. Re-run mapping jobs in each environment to handle ID mismatch between Dev/Stg/Prod. |
 
 ## Processing Performance Challenges (Scale: 13M Docs / 8.8M Products)
 
@@ -66,7 +68,22 @@ PIM → CSV Export → Cloud Storage (GCS) → Databricks ETL → PostgreSQL →
 1. Separate "Heavy" AI jobs (OCR/Embedding) from "Fast" structured data jobs (PIM import).
 2. Provide a mapping table for Testers to run specific jobs manually on Databricks based on data type.
 
+### Case Study: Diff Migration ETL Workaround (SPRINT 23)
+
+**Problem**: During the crunch time of Diff Data Migration before Production release, the AI processing (OCR/Embedding) for 4,000 Technical documents threatened the timeline.
+
+**Mitigation Strategy (Database State Hack)**: 
+1. Run pipeline for Technical data up to Silver layer.
+2. Manually update tracking DB status from `ready_for_ocr` to `ready_for_gold`.
+3. Resume pipeline. This bypassed the slow Unstructured Data processing while successfully importing all Structured Data (Metadata) to the UI.
+
 ## Data Consistency Challenges
+
+### Case Study: Dirty Data from External Source (SPRINT 23)
+
+**Problem**: QA team discovered incorrect Part-search data on Production. Root cause was identified as the upstream source providing corrupted data.
+
+**Resolution**: Upstream source provided a full clean data dump. Instead of using Delta Update, the team executed a **Hard Delete** of all existing Parts data on Production before doing a Full Import to prevent logic corruption. (Required extreme caution to not delete cross-table data).
 
 ### Case Study: PoC Benchmark Discrepancy
 

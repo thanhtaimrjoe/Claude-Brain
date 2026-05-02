@@ -20,6 +20,7 @@ type: project
 
 | Date | Decision | Impact |
 |------|----------|---------|
+| 2024/12 | **Hybrid Search Strategy** | Established methods to combine Semantic & Keyword search scores |
 | 2025/05-06 | **Documentation Strategy** | Avoid double maintenance, use Markdown over Excel |
 | 2025/05-06 | **ETL Evaluation** | Compare Databricks vs Data Fusion vs Dataflow |
 | 2025/05-06 | **Clean Architecture** | Standardize backend development pattern |

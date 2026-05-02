@@ -12,3 +12,6 @@
 - Hates boilerplate / generic output
 - Prefers structured breakdown when debugging
 - Likes to understand the "why" behind system decisions
+
+## Project Context
+- [Meeting Notes Context](memory/kinken_meeting_notes_context.md) — Context on ad-hoc vs weekly meetings for KINKEN.

@@ -69,37 +69,66 @@ Server-side summary computations executed with search queries. They produce grou
 
 ### Hybrid Search (Morphological + Semantic)
 
+To combine Semantic Search (vector-based) and Morphological Search (keyword-based) effectively, the following strategies are used:
+
+1.  **Score Normalization**: Both scores are normalized to a 0-1 scale to ensure they are comparable.
+2.  **Weighted Integration**: Scores are combined using weighted averages: `final_score = α * semantic_score + β * keyword_score`.
+3.  **Bool Query**: Using `should` clauses to combine match queries and script scores.
+4.  **Score Boosting**: Applying `boost` (e.g., `title^3`) to prioritize specific fields.
+5.  **RRF (Reciprocal Rank Fusion)**: A robust algorithm that combines rankings from different search methods without needing normalized scores.
+6.  **Re-ranking**: Obtaining initial results from ES and then re-sorting them on the server-side (Python/FastAPI) using custom logic.
+7.  **Learning to Rank (LTR)**: (Advanced) Using machine learning models to optimize ranking based on training datasets.
+
+#### Hybrid Search Example (Bool Query)
+
 ```json
 {
   "query": {
     "bool": {
       "should": [
-        { "match": { "title": { "query": "アルミサッシ", "analyzer": "kuromoji" } } },
-        { "knn": { "field": "title_vector", "query_vector": [...], "k": 10 } }
+        { "match": { "title": { "query": "アルミサッシ", "analyzer": "kuromoji", "boost": 1.5 } } },
+        { "knn": { "field": "title_vector", "query_vector": [...], "k": 10, "boost": 2.0 } }
       ]
     }
   }
 }
 ```
 
-**RRF (Reciprocal Rank Fusion)**: Combines scores from both approaches.
-
 ### Index Alias Strategy
 
 Enables zero-downtime reindexing:
 
 ```
-1. Create new index: documents_v2
+1. Create new index: documents_v2 (with updated settings/dictionary)
 2. Reindex data into documents_v2
 3. Switch alias: documents → documents_v2
 4. Delete old index: documents_v1
 ```
+
+### Dictionary & Synonym Management
+
+**Problem**: Updating morphological dictionaries (形態素辞書) typically requires restarting the Elastic Cloud cluster and re-ingesting data from the database, causing significant operational overhead.
+
+**Solution Approach**:
+1. Use Elasticsearch Extensions for dictionary files (since 1500+ lines is too large to put directly in index settings).
+2. Manage dictionary files with versioning (keep old versions, add new ones).
+3. **Reindex Strategy**: Instead of pulling all data from PostgreSQL again, use the `_reindex` API to copy data from the old index to a new index. The new index will apply the updated dictionary tokenizer during ingestion.
 
 ### Segment Bloat
 
 **Problem**: Elasticsearch marks documents as deleted but doesn't remove them immediately, causing disk bloat.
 
 **Solution**: Run `_forcemerge` to compact segments.
+
+### AI Outage Fallback Mechanism (Degraded Operation)
+
+**Problem**: System must remain operational even if OpenAI API is down (KINKEN-574).
+
+**Solution**: Automatic Degraded Operation (縮退運転 - Shukutai unten) using Redis & Environment Secrets.
+1. **Normal State**: Secret `openai-enabled-prod = true`, Redis is empty.
+2. **Outage Detected**: System automatically sets `openai-enabled-prod = false` in Redis and creates a new Secret version = false.
+3. **During Outage**: App checks Redis first. If false, it skips Semantic Search (KNN) and executes **Full-text Search only**.
+4. **Recovery**: Manually clear Redis (via CLI/Databricks) and update Secret to true (via GCP Console) to resume Hybrid Search.
 
 ## Case Study: PoC Benchmark Discrepancy
 
