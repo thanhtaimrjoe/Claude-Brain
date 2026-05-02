@@ -1,9 +1,3 @@
----
-name: kinken_project_comprehensive_overview
-description: Comprehensive overview of KINKEN project - document search system for LIXIL metal products
-type: project
----
-
 # KINKEN Project - Comprehensive Overview
 
 **Last updated**: 2026-04-30  
@@ -196,24 +190,6 @@ PIM → CSV → Cloud Storage (GCS) → Databricks ETL → PostgreSQL → Elasti
 4. **Data validation**: PIM → DB → ES pipeline
 5. **Cross-layer testing**: UI, API, DB, ES layers
 6. **Performance testing**: Response time targets (~3 seconds)
-
----
-
-## 🔗 Key Files Reference
-
-| File | Purpose |
-|------|---------|
-| `sprint_tracking.md` | Sprint history SPRINT 9-25 with case studies |
-| `milestones.md` | Key decisions and timeline |
-| `glossary.md` | Technical terms (JP/EN/VI) |
-| `case_studies.md` | 5 detailed case studies for interview |
-| `playbook.md` | Interview Q&A and preparation |
-| `elasticsearch.md` | ES concepts and optimization |
-| `function_design.md` | Pickup/Limited mode UX |
-| `search_apis.md` | UI API vs Search Platform API |
-| `auth_model.md` | Authentication for user types |
-| `data_flow.md` | ETL pipeline and data transformation |
-| `tech_stack.md` | Final technical stack and NFRs |
 
 ---
 

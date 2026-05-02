@@ -7,6 +7,9 @@ originSessionId: 9bdebdd7-459b-474e-a4df-4bd3a1513398
 
 # KINKEN Sprint Tracking & Retrospective
 
+> Note: Information from early sprints comes from ad-hoc/sync meetings. Future sprints may include weekly meeting reports. The distinction is kept to understand technical deep-dives (ad-hoc) vs progress summaries (weekly).
+
+
 ## Overview
 
 Dự án hiện tại đang ở **SPRINT 25**, giai đoạn chuẩn bị release lên môi trường PROD. Tài liệu này dùng để nhìn lại (retrospective) toàn bộ quá trình phát triển dự án từ sơ khai, theo dõi tiến độ tổng thể, các vấn đề gặp phải và cách giải quyết (case studies) qua từng giai đoạn.
